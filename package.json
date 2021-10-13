@@ -1,0 +1,22 @@
+{
+  "name": "mysqlpartitionkeeper",
+  "version": "1.0.0",
+  "description": "Automatically creates new monthly partition and removes oldest partition",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/i-sanyam/mysqlPartitionKeeper.git"
+  },
+  "author": "Sanyam Aggarwal",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/i-sanyam/mysqlPartitionKeeper/issues"
+  },
+  "homepage": "https://github.com/i-sanyam/mysqlPartitionKeeper#readme",
+  "dependencies": {
+    "mysql2": "2.3.0"
+  }
+}
