@@ -4,8 +4,8 @@ const processArg = process.argv;
 const TABLE_NAME = processArg[2];
 const MYSQLIP = processArg[3];
 const mysql = require('mysql2');
-import sendAlert from "./alert.mjs"
-const { reorganisePartitionQuery, oldestPartitionInfoQuery, dropPartitionQuery } = require('./queries');
+import sendAlert from "./src/alert.mjs"
+const { reorganisePartitionQuery, oldestPartitionInfoQuery, dropPartitionQuery } = require('./src/queries');
 const serverIp = fetchServerPrivateIp();
 const databaseName = "dbname";
 // create the connection
