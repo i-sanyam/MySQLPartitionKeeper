@@ -5,8 +5,8 @@ const getMonthSerialNumber = (monthNumber) => {
 const reorganisePartitionQuery = (TABLE_NAME) => {
   /**
    * generates query for adding a new partition 
-   * eg. the cronjob runs in march 202x for adding a new partition for the month of April 202x, the new partition's name will be p_202x0501
-   * i.e. partition has all the records of less than date 202x-05-01
+   * eg. In the scenario where the cronjob runs in March 2020,for adding a new partition for the month of April 2020,
+   * the new partition's name will be p_20200501 i.e. partition has all the records of less than date 2020-05-01
    */
   const dateObjNow = new Date();
   const currentYear = dateObjNow.getFullYear();
@@ -14,8 +14,9 @@ const reorganisePartitionQuery = (TABLE_NAME) => {
   const firstDayOfNewMonth = `${currentYear}-${newPartitionMonthIdx}-01`;
   const newPartitionName = `p_${currentYear}${newPartitionMonthIdx}01`;
   const reorgQuery = `ALTER TABLE ${TABLE_NAME} REORGANIZE PARTITION future INTO (` +
-    `PARTITION ${newPartitionName} VALUES LESS THAN (UNIX_TIMESTAMP('${firstDayOfNewMonth}')), ` +
-    `PARTITION future VALUES LESS THAN MAXVALUE)`;
+      `PARTITION ${newPartitionName} VALUES LESS THAN (UNIX_TIMESTAMP('${firstDayOfNewMonth}')), ` +
+      `PARTITION future VALUES LESS THAN MAXVALUE` +
+    `)`;
     return reorgQuery;
 }
 
