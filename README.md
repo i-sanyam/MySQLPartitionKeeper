@@ -24,6 +24,4 @@ n.   future     - Contains all records before MAX VALUE
 
 ## Note - 
 This exact nomenclature has to be used for this code to work properly.
-
 Ensure usage of code in a test environment, before running in production.
-The code is provided as is and the author developer is not liable to damages, inconvenience and losses arising out of loss of data or any issue in MySQL servers by usage of this code.
