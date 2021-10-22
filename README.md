@@ -1,5 +1,7 @@
-# mysqlPartitionKeeper
-Automatically creates new monthly partition and removes oldest partition for partitioned tables.
+# MySQLPartitionKeeper
+Automatically creates new monthly partition and removes oldest partition for range partitioned tables.
+
+As an illustration this code works only for tables range partitioned on timestamp.
 
 Partition Nomenclature used -
 ```
@@ -28,7 +30,7 @@ n.   future     - Contains all records before MAX VALUE
 CREATE DATABASE `sampledb`;
 
 CREATE TABLE `sampledb`.`tb_foo_partitioned` 
-  ( `id` INT NOT NULL , `ts` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP , PRIMARY KEY (`id`, `ts`)) 
+  ( `id` INT NOT NULL AUTO_INCREMENT, `ts` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP , PRIMARY KEY (`id`, `ts`)) 
   ENGINE = InnoDB 
   PARTITION BY RANGE (UNIX_TIMESTAMP(ts)) PARTITIONS 3 ( 
     PARTITION p_20211001 VALUES LESS THAN (UNIX_TIMESTAMP("2021-10-01")), 
