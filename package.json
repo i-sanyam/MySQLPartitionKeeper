@@ -8,15 +8,16 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/i-sanyam/mysqlPartitionKeeper.git"
+    "url": "git+https://github.com/i-sanyam/MySQLPartitionKeeper.git"
   },
   "author": "Sanyam Aggarwal",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/i-sanyam/mysqlPartitionKeeper/issues"
+    "url": "https://github.com/i-sanyam/MySQLPartitionKeeper/issues"
   },
-  "homepage": "https://github.com/i-sanyam/mysqlPartitionKeeper#readme",
+  "homepage": "https://github.com/i-sanyam/MySQLPartitionKeeper#readme",
   "dependencies": {
+    "config": "3.3.6",
     "mysql2": "2.3.0"
   }
 }

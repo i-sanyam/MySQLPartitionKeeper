@@ -1,4 +1,5 @@
 # MySQLPartitionKeeper
+
 Automatically creates new monthly partition and removes oldest partition for range partitioned tables.
 
 As an illustration this code works only for tables range partitioned on timestamp.

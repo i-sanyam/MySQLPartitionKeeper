@@ -1,8 +1,10 @@
+import executeQuery from "./mysql.mjs";
+
 const getMonthSerialNumber = (monthNumber) => {
   return monthNumber < 10 ? `0${monthNumber}` : monthNumber;
 }
 
-const reorganisePartitionQuery = (TABLE_NAME) => {
+const reorganiseMonthlyPartitionQuery = (TABLE_NAME, partitionToReorganise = "future") => {
   /**
    * generates query for adding a new partition 
    * eg. In the scenario where the cronjob runs in March 2020,for adding a new partition for the month of April 2020,
@@ -13,24 +15,25 @@ const reorganisePartitionQuery = (TABLE_NAME) => {
   const newPartitionMonthIdx = getMonthSerialNumber( dateObjNow.getMonth() + 1 + 1 + 1 );
   const firstDayOfNewMonth = `${currentYear}-${newPartitionMonthIdx}-01`;
   const newPartitionName = `p_${currentYear}${newPartitionMonthIdx}01`;
-  const reorgQuery = `ALTER TABLE ${TABLE_NAME} REORGANIZE PARTITION future INTO (` +
+  const reorgQuery = `ALTER TABLE ${TABLE_NAME} REORGANIZE PARTITION ${partitionToReorganise} INTO (` +
       `PARTITION ${newPartitionName} VALUES LESS THAN (UNIX_TIMESTAMP('${firstDayOfNewMonth}')), ` +
       `PARTITION future VALUES LESS THAN MAXVALUE` +
     `)`;
-    return reorgQuery;
+    return executeQuery(reorgQuery, [], `'${TABLE_NAME}' reorganise partition '${partitionToReorganise}'`);
 }
 
 const oldestPartitionInfoQuery = (DATABASE_NAME, TABLE_NAME) => {
-  return (
+  return executeQuery(
     `SELECT * FROM information_schema.partitions WHERE ` + 
       `TABLE_SCHEMA ='${DATABASE_NAME}' ` + 
       `AND TABLE_NAME = '${TABLE_NAME}' ` +
       `AND PARTITION_ORDINAL_POSITION = 1`
-  );
+  , [], `Partition Info ${DATABASE_NAME}.${TABLE_NAME}`);
 }
 
 const dropPartitionQuery = (TABLE_NAME, partitionToDrop) => {
-  return ( `ALTER TABLE ${TABLE_NAME} DROP PARTITION ${partitionToDrop}` );
+  return executeQuery( `ALTER TABLE ${TABLE_NAME} DROP PARTITION ${partitionToDrop}`, [], 
+    `Drop ${TABLE_NAME}'s partition '${partitionToDrop}'` );
 }
 
-export { dropPartitionQuery, oldestPartitionInfoQuery, reorganisePartitionQuery };
+export { dropPartitionQuery, oldestPartitionInfoQuery, reorganiseMonthlyPartitionQuery };

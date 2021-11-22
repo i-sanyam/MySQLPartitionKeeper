@@ -1,0 +1,9 @@
+{
+  "dbSettings": {
+    "dbName"    : "sampledb",
+    "host"      : "localhost",
+    "password"  : "T0nqcZp@:ZjfLvLz0x",
+    "tableName" : "tb_foo_partitioned",
+    "user"      : "maintenance"
+  }
+}
