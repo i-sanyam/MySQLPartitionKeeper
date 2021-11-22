@@ -15,25 +15,26 @@ const reorganiseMonthlyPartitionQuery = (TABLE_NAME, partitionToReorganise = "fu
   const newPartitionMonthIdx = getMonthSerialNumber( dateObjNow.getMonth() + 1 + 1 + 1 );
   const firstDayOfNewMonth = `${currentYear}-${newPartitionMonthIdx}-01`;
   const newPartitionName = `p_${currentYear}${newPartitionMonthIdx}01`;
+
   const reorgQuery = `ALTER TABLE ${TABLE_NAME} REORGANIZE PARTITION ${partitionToReorganise} INTO (` +
       `PARTITION ${newPartitionName} VALUES LESS THAN (UNIX_TIMESTAMP('${firstDayOfNewMonth}')), ` +
       `PARTITION future VALUES LESS THAN MAXVALUE` +
     `)`;
-    return executeQuery(reorgQuery, [], `'${TABLE_NAME}' reorganise partition '${partitionToReorganise}'`);
+  
+  return executeQuery(reorgQuery, [], `'${TABLE_NAME}' reorganise partition '${partitionToReorganise}'`);
 }
 
 const oldestPartitionInfoQuery = (DATABASE_NAME, TABLE_NAME) => {
-  return executeQuery(
-    `SELECT * FROM information_schema.partitions WHERE ` + 
-      `TABLE_SCHEMA ='${DATABASE_NAME}' ` + 
-      `AND TABLE_NAME = '${TABLE_NAME}' ` +
-      `AND PARTITION_ORDINAL_POSITION = 1`
-  , [], `Partition Info ${DATABASE_NAME}.${TABLE_NAME}`);
+  const query = `SELECT * FROM information_schema.partitions WHERE ` + 
+    `TABLE_SCHEMA ='${DATABASE_NAME}' ` + 
+    `AND TABLE_NAME = '${TABLE_NAME}' ` +
+    `AND PARTITION_ORDINAL_POSITION = 1`;
+  return executeQuery(query, [], `Partition Info ${DATABASE_NAME}.${TABLE_NAME}`);
 }
 
 const dropPartitionQuery = (TABLE_NAME, partitionToDrop) => {
-  return executeQuery( `ALTER TABLE ${TABLE_NAME} DROP PARTITION ${partitionToDrop}`, [], 
-    `Drop ${TABLE_NAME}'s partition '${partitionToDrop}'` );
+  const query = `ALTER TABLE ${TABLE_NAME} DROP PARTITION ${partitionToDrop}`;
+  return executeQuery( query, [], `Drop ${TABLE_NAME}'s partition '${partitionToDrop}'` );
 }
 
 export { dropPartitionQuery, oldestPartitionInfoQuery, reorganiseMonthlyPartitionQuery };

@@ -2,7 +2,7 @@
   "dbSettings": {
     "dbName"    : "sampledb",
     "host"      : "localhost",
-    "password"  : "T0nqcZp@:ZjfLvLz0x",
+    "password"  : "password",
     "tableName" : "tb_foo_partitioned",
     "user"      : "maintenance"
   }

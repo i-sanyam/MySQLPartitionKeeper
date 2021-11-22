@@ -18,7 +18,7 @@ const connectionPool = mysql.createPool({
   database : dbName
 });
 
-const executeQuery = async (query, params, event) => {
+const executeQuery = async (query, params, event = "Execute Query") => {
   try {
     const [rows, fields] = await connectionPool.query(query, params);
     sendAlert(`${event} success`, JSON.stringify({ event, params, query, rows }));
