@@ -31,7 +31,7 @@ const reorganiseMonthlyPartitionQuery = (TABLE_NAME, partitionToReorganise = "fu
 }
 
 const oldestPartitionInfoQuery = (DATABASE_NAME, TABLE_NAME) => {
-  const infoQuery = `SELECT * FROM information_schema.partitions WHERE ` + 
+  const infoQuery = `SELECT PARTITION_NAME, PARTITION_ORDINAL_POSITION FROM information_schema.partitions WHERE ` + 
     `TABLE_SCHEMA ='${DATABASE_NAME}' ` + 
     `AND TABLE_NAME = '${TABLE_NAME}' ` +
     `AND PARTITION_ORDINAL_POSITION = 1`;
