@@ -27,7 +27,7 @@ async function dropOldPartition() {
       sendAlert("TABLE_NOT_PARTITIONED", `No Partition Found for Table ${TABLE_NAME}`);
       throw new Error(`No Partition Found for Table ${TABLE_NAME}`);
     }
-
+    // backup partition - partitionToDrop of TABLE_NAME here
     const partitionToDrop = partitionInfo[0].PARTITION_NAME;
     await dropPartitionQuery(TABLE_NAME, partitionToDrop);
     return;
